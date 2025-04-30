@@ -1,0 +1,1999 @@
+esphome:
+  name: blackstaff2
+  friendly_name: blackstaff2
+
+  on_boot:
+    priority: -10
+    then:
+    
+    - lambda: !lambda |-
+            id(key_a_click_state).publish_state(false);
+            id(key_b_click_state).publish_state(false);
+            id(key_c_click_state).publish_state(false);
+            id(key_d_click_state).publish_state(false);
+            id(key_e_click_state).publish_state(false);
+            id(key_f_click_state).publish_state(false);
+            id(key_g_click_state).publish_state(false);
+            id(key_h_click_state).publish_state(false);
+            id(key_j_click_state).publish_state(false);
+            id(key_k_click_state).publish_state(false);
+            id(key_l_click_state).publish_state(false);
+            id(key_m_click_state).publish_state(false);
+            id(key_n_click_state).publish_state(false);
+            id(key_o_click_state).publish_state(false);
+            id(key_p_click_state).publish_state(false);
+            id(key_q_click_state).publish_state(false);
+            id(key_r_click_state).publish_state(false);
+            id(key_s_click_state).publish_state(false);
+            id(key_t_click_state).publish_state(false);
+            id(key_u_click_state).publish_state(false);
+            id(key_v_click_state).publish_state(false);
+            id(key_w_click_state).publish_state(false);
+            id(key_x_click_state).publish_state(false);
+            id(key_y_click_state).publish_state(false);
+            id(key_a_held_state).publish_state(false);
+            id(key_b_held_state).publish_state(false);
+            id(key_c_held_state).publish_state(false);
+            id(key_d_held_state).publish_state(false);
+            id(key_e_held_state).publish_state(false);
+            id(key_f_held_state).publish_state(false);
+            id(key_g_held_state).publish_state(false);
+            id(key_h_held_state).publish_state(false);
+            id(key_i_held_state).publish_state(false);
+            id(key_j_held_state).publish_state(false);
+            id(key_k_held_state).publish_state(false);
+            id(key_l_held_state).publish_state(false);
+            id(key_m_held_state).publish_state(false);
+            id(key_n_held_state).publish_state(false);
+            id(key_o_held_state).publish_state(false);
+            id(key_p_held_state).publish_state(false);
+            id(key_q_held_state).publish_state(false);
+            id(key_r_held_state).publish_state(false);
+            id(key_s_held_state).publish_state(false);
+            id(key_t_held_state).publish_state(false);
+            id(key_u_held_state).publish_state(false);
+            id(key_v_held_state).publish_state(false);
+            id(key_w_held_state).publish_state(false);
+            id(key_x_held_state).publish_state(false);
+            id(key_y_held_state).publish_state(false);
+            id(key_a_double_click_state).publish_state(false);
+            id(key_b_double_click_state).publish_state(false);
+            id(key_c_double_click_state).publish_state(false);
+            id(key_d_double_click_state).publish_state(false);
+            id(key_e_double_click_state).publish_state(false);
+            id(key_f_double_click_state).publish_state(false);
+            id(key_g_double_click_state).publish_state(false);
+            id(key_h_double_click_state).publish_state(false);
+            id(key_i_double_click_state).publish_state(false);
+            id(key_j_double_click_state).publish_state(false);
+            id(key_k_double_click_state).publish_state(false);
+            id(key_l_double_click_state).publish_state(false);
+            id(key_m_double_click_state).publish_state(false);
+            id(key_n_double_click_state).publish_state(false);
+            id(key_o_double_click_state).publish_state(false);
+            id(key_p_double_click_state).publish_state(false);
+            id(key_q_double_click_state).publish_state(false);
+            id(key_r_double_click_state).publish_state(false);
+            id(key_s_double_click_state).publish_state(false);
+            id(key_t_double_click_state).publish_state(false);
+            id(key_u_double_click_state).publish_state(false);
+            id(key_v_double_click_state).publish_state(false);
+            id(key_w_double_click_state).publish_state(false);
+            id(key_x_double_click_state).publish_state(false);
+            id(key_y_double_click_state).publish_state(false);
+    - wait_until:
+        api.connected:
+    - logger.log: API is connected!
+    - component.update: current_mode_text
+    - lambda: |-
+        id(current_mode_text).publish_state(
+          id(current_mode) == 0 ? "Dice Calculator" :
+          id(current_mode) == 1 ? "Music Control" :
+          id(current_mode) == 2 ? "Lighting Control" :
+          "Unknown"
+        );
+
+esp32:
+  board: adafruit_feather_esp32s3
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "KeL4yAdZiJEMWZmIpgICB26JK5i0/JyFWkPLJ3pBAX8="
+  services:
+    - service: switch_to_dice_mode
+      variables:
+        dummy: int
+      then:
+        - script.execute:
+            id: switch_mode
+            new_mode: 0
+
+    - service: switch_to_music_mode
+      variables:
+        dummy: int
+      then:
+        - script.execute:
+            id: switch_mode
+            new_mode: 1
+
+    - service: switch_to_lighting_mode
+      variables:
+        dummy: int
+      then:
+        - script.execute:
+            id: switch_mode
+            new_mode: 2
+    - service: switch_to_diagnostics_mode
+      variables:
+        dummy: int
+      then:
+        - script.execute:
+            id: switch_mode
+            new_mode: 3
+
+ota:
+  - platform: esphome
+    password: "e23d01d3caf996bffff83e61a0aed6ee"
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Blackstaff2 Fallback Hotspot"
+    password: "M1V0Y69pEpXQ"
+
+captive_portal:
+
+# I2C bus for the OLED screen
+i2c:
+  scan: true
+  id: bus_a
+  frequency: 300kHz
+
+
+
+script:
+  - id: simulate_display_fade
+    mode: restart
+    then:
+      - lambda: |-
+          for (int step = 0; step <= 10; step++) {
+            id(oled_display).clear();
+            int height = (step * 64) / 10;
+            id(oled_display).filled_rectangle(0, 0, 128, height);
+            id(oled_display).update();
+            delay(50);
+          }
+          id(sleeping_mode) = true;
+  - id: enter_sleep_mode
+    then:
+      - script.execute: simulate_display_fade  # Optional: fade before blank
+      - lambda: |-
+          id(sleeping_mode) = true;
+          id(oled_display).clear();
+          id(oled_display).update();
+          id(oled_display).set_update_interval(0);  // stop updates
+  - id: exit_sleep_mode
+    then:
+      - lambda: |-
+          id(sleeping_mode) = false;
+          id(oled_display).set_update_interval(500);  // resume updates
+          id(wake_animation_frame) = 0;  // if you want a boot-style wake
+          id(ui_mode) = 0;
+  - id: show_diagnostics_screen
+    then:
+      - lambda: |-
+          id(oled_display).clear();
+          if (id(diagnostics_screen) == 0) {
+            // Battery screen
+            id(oled_display).print(0, 0, id(roboto_16), "Battery:");
+            id(oled_display).printf(0, 20, id(roboto_24), "%.0f%%", id(battery_level_sensor).state);
+            // Optional: Fancy battery bar or glyph
+          } else if (id(diagnostics_screen) == 1) {
+            // Wi-Fi screen
+            id(oled_display).print(0, 0, id(roboto_16), "Wi-Fi:");
+            if (id(wifi_connected).state) {
+              id(oled_display).print(0, 20, id(roboto_24), "Connected");
+            } else {
+              id(oled_display).print(0, 20, id(roboto_24), "Disconnected");
+            }
+          } else if (id(diagnostics_screen) == 2) {
+            // API screen
+            id(oled_display).print(0, 0, id(roboto_16), "API:");
+            if (id(api_connected).state) {
+              id(oled_display).print(0, 20, id(roboto_24), "Online");
+            } else {
+              id(oled_display).print(0, 20, id(roboto_24), "Offline");
+            }
+          }
+          id(oled_display).update();
+
+  - id: switch_mode
+    mode: restart
+    parameters:
+      new_mode: int
+    then:
+      - lambda: |-
+          if (new_mode >= 0 && new_mode <= 3) {
+            id(current_mode) = new_mode;
+          } else {
+            ESP_LOGW("switch_mode", "Invalid mode selected: %d", new_mode);
+          }
+      - if:
+          condition:
+            lambda: 'return new_mode == 0;'
+          then:
+            - lambda: |-
+                id(dice_expression) = "";
+                id(ui_mode) = 3;
+            - delay: 1s
+            - lambda: |-
+                id(ui_mode) = 0;
+      - lambda: |-
+          id(current_mode_text).publish_state(
+            new_mode == 0 ? "Dice Calculator" :
+            new_mode == 1 ? "Music Control" :
+            new_mode == 2 ? "Lighting Control" :
+            new_mode == 3 ? "Diagnostics" :
+            new_mode == 4 ? "Exploration" :
+              "Unknown"
+          );
+      - script.execute: reset_idle_timer
+
+
+  - id: reset_idle_timer
+    mode: restart
+    then:
+      - script.stop: enter_idle_mode
+      - script.execute: enter_idle_mode
+
+  - id: enter_idle_mode
+    mode: restart
+    then:
+      - delay: 600s
+      - lambda: |-
+          id(ui_mode) = 0;  // Switch to shimmer
+
+  - id: show_media_status
+    mode: restart
+    parameters:
+      message: string
+    then:
+      - lambda: |-
+          id(d20_result_active) = false;  // cancel any active roll
+          id(media_status_message) = message;
+          id(ui_mode) = 2;
+          id(idle_mode) = false;
+      - delay: 4s
+      - lambda: |-
+          // Only go back to idle if a new d20 roll didn't interrupt during the delay
+          if (!id(d20_result_active)) {
+            id(ui_mode) = 0;
+            id(idle_mode) = true;
+          }
+      - script.execute: enter_idle_mode
+
+  - id: show_d20_result
+    mode: restart
+    then:
+      - script.stop: show_media_status  # << NEW: cancel media messages
+      - script.stop: enter_idle_mode
+      - lambda: |-
+          id(idle_mode) = false;
+          id(d20_result_active) = true;
+          id(ui_mode) = 1;
+      - delay: 5min
+      - lambda: |-
+          if (id(d20_result_active)) {
+            id(ui_mode) = 0;
+            id(idle_mode) = true;
+          }
+          id(d20_result_active) = false;
+      - script.execute: enter_idle_mode  
+       
+
+interval:
+  - interval: 100ms
+    then:
+      - lambda: |-
+          // Boot animation logic
+          if (id(boot_animation_frame) < 80) {
+            id(boot_animation_frame) += 1;
+            if (id(boot_animation_frame) == 50) {
+              if (id(current_mode) != 0) {
+                id(idle_mode) = true;
+              }
+            }
+          }
+
+          // Wake-up animation logic
+          if (!id(sleeping_mode) && id(wake_animation_frame) < 10) {
+            id(wake_animation_frame) += 1;
+          }
+
+
+# SSD1306 OLED display config
+display:
+  - platform: ssd1306_i2c
+    id: oled_display
+    model: "SSD1306 128x64"
+    address: 0x3C
+    update_interval: 500ms
+    lambda: |-
+      // Do not update screen while in sleep mode
+      if (id(sleeping_mode)) {
+        return;
+      }
+      // WAKE-UP FADE-IN: simulate dimming by drawing a black overlay
+      int wake = id(wake_animation_frame);
+      if (wake < 10) {
+        int overlay_height = (10 - wake) * 6;  // From 60 to 0 pixels
+        it.filled_rectangle(0, 0, 128, overlay_height);
+      }      
+
+      // BOOT ANIMATION FIRST
+      if (id(boot_animation_frame) < 50) {
+        int frame = id(boot_animation_frame);
+        int bar_length = frame * 2;
+        it.line(0, 0, bar_length, 0);
+        it.line(0, 1, bar_length, 1);
+
+        const int rune_count = 10;
+        const float angle_step = 2 * M_PI / rune_count;
+        for (int i = 0; i < rune_count; i++) {
+          if (i * 5 < frame) {
+            float angle = i * angle_step;
+            int x = 64 + int(27 * cos(angle));
+            int y = 40 + int(16 * sin(angle));
+            it.circle(x, y, 1);
+          }
+        }
+
+        if (frame > 35) {
+          int radius = 2 + (frame % 3);
+          it.circle(64, 40, radius);
+        }
+        return;
+      }
+
+      // PRIORITY 1: DICE CALCULATOR (current_mode 0, unless UI mode = 1)
+      if (id(current_mode) == 0 && id(ui_mode) != 1) {
+        if (id(dice_expression).empty()) {
+          it.printf(0, 0, id(roboto_16), "Enter Dice:");
+        } else {
+          it.printf(0, 0, id(roboto_16), "Roll: %s", id(dice_expression).c_str());
+        }
+        return;
+      }
+
+      // PRIORITY 2: SHOW D20 ROLL RESULTS (UI MODE 1)
+      if (id(ui_mode) == 1) {
+        if (id(d20_roll_1) == 0) {
+          it.print(0, 0, id(roboto_14), "Press Y to roll");
+        } else if (id(d20_roll_2) == 0) {
+          it.printf(0, 0, id(roboto_14), "You rolled:");
+          it.printf(0, 20, id(roboto_20), "%d", id(d20_roll_1));
+        } else {
+          it.printf(0, 0, id(roboto_14), "You rolled:");
+          it.printf(0, 20, id(roboto_20), "1: %d", id(d20_roll_1));
+          it.printf(0, 40, id(roboto_20), "2: %d", id(d20_roll_2));
+        }
+        return;
+      }
+
+      // PRIORITY 3: SHOW MEDIA STATUS MESSAGES (UI MODE 2)
+      if (id(ui_mode) == 2) {
+        it.printf(0, 0, id(roboto_16), "%s", id(media_status_message).c_str());
+        return;
+      }
+
+      if (id(current_mode) == 3 && id(ui_mode) == 3) {
+        if (id(diagnostics_screen) == 0) {
+          it.print(0, 0, id(roboto_16), "Battery:");
+          it.printf(0, 20, id(roboto_24), "%.0f%%", id(battery_level_sensor).state);
+        } else if (id(diagnostics_screen) == 1) {
+          it.print(0, 0, id(roboto_16), "Wi-Fi:");
+          it.print(0, 20, id(roboto_24), id(wifi_connected).state ? "Connected" : "Disconnected");
+        } else if (id(diagnostics_screen) == 2) {
+          it.print(0, 0, id(roboto_16), "API:");
+          it.print(0, 20, id(roboto_24), id(api_connected).state ? "Online" : "Offline");
+        }
+        return;
+      }
+
+      // IDLE WAVES (only if idle_mode = true)
+      if (id(idle_mode)) {
+        int t = millis() / 100;
+        for (int x = 0; x < 128; x++) {
+          int y1 = 32 + int(12 * sin((x + t) * 0.15));
+          it.draw_pixel_at(x, y1);
+          int y2 = 32 + int(6 * sin((x + t + 40) * 0.22));
+          it.draw_pixel_at(x, y2);
+        }
+
+        for (int x = 0; x < 128; x += 6) {
+          if ((x + t) % 20 < 10) {
+            it.draw_pixel_at(x, 0);
+          }
+        }
+        return;
+      }
+
+      // FALLBACK: if now_playing is non-empty
+      if (id(now_playing).state != "") {
+        it.printf(0, 52, id(roboto_16), "%s", id(now_playing).state.c_str());
+      }
+
+
+# Font declaration
+font:
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto_20
+    size: 20    
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto_16
+    size: 16    
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto_14
+    size: 14
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto_24
+    size: 24  
+
+globals:
+  - id: wake_animation_frame
+    type: int
+    restore_value: no
+    initial_value: '10'  # Fully animated (no wake-up effect unless reset)
+      
+  - id: sleeping_mode
+    type: bool
+    restore_value: no
+    initial_value: "false"  
+    
+  - id: diagnostics_screen
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+  - id: dice_expression
+    type: std::string
+    restore_value: no
+    initial_value: ""  # Empty expression to start
+
+  - id: last_key_pressed
+    type: std::string
+    restore_value: no
+    initial_value: ""  # (Optional, for debugging)  
+  
+  - id: current_mode
+    type: int
+    restore_value: no
+    initial_value: '0' # 0 = Dice Calculator, 1 = Music Control, 2 = Lighting Control  
+  
+  - id: d20_roll_1
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+  - id: d20_roll_2
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+  - id: boot_animation_frame
+    type: int
+    restore_value: no
+    initial_value: '0'  
+
+  - id: ui_mode
+    type: int
+    restore_value: no
+    initial_value: '0'  # 0 = shimmer, 1 = d20 result
+
+  - id: idle_mode
+    type: bool
+    restore_value: no
+    initial_value: "false"
+
+  - id: particle_x
+    type: std::vector<int>
+    restore_value: no
+    initial_value: 'std::vector<int>()'
+
+  - id: particle_y
+    type: std::vector<int>
+    restore_value: no
+    initial_value: 'std::vector<int>()' 
+
+  - id: media_status_message
+    type: std::string
+    restore_value: no
+    initial_value: "\"\""  # empty string  
+  - id: d20_result_active
+    type: bool
+    restore_value: no
+    initial_value: "false"  
+
+matrix_keypad:
+  id: espdeck_keypad
+  rows:
+    - pin: 9
+    - pin: 6
+    - pin: A0
+    - pin: A1
+    - pin: A2
+    - pin: A3
+  columns:
+    - pin: 12
+    - pin: 13
+    - pin: 11
+    - pin: 10
+    - pin: 5
+# # Numbered keys are fillers because not all rows/columns have equal number of keys. They do not exist on actual device.    
+  keys: "1AB2CDEFGHIJKL3MNOPQRSTU4V5WXY"
+  has_diodes: false
+
+text_sensor:
+
+
+  - platform: wifi_info
+    ip_address:
+      name: "Blackstaff IP Address"
+    ssid:
+      name: "Blackstaff WiFi SSID"
+      id: wifi_ssid_sensor
+    bssid:
+      name: "Blackstaff WiFi BSSID"
+    mac_address:
+      name: "Blackstaff MAC Address"
+    scan_results:
+      name: Latest Scan Results  
+  
+  - platform: homeassistant
+    id: now_playing
+    entity_id: media_player.picoreplayer2
+  - platform: template
+    id: current_mode_text
+    name: "Blackstaff Current Mode"
+    lambda: |-
+      if (id(current_mode) == 0) {
+        return {"Dice Calculator"};
+      } else if (id(current_mode) == 1) {
+        return {"Music Control"};
+      } else if (id(current_mode) == 2) {
+        return {"Lighting Control"};
+      } else {
+        return {"Unknown"};
+      }
+    update_interval: never  
+
+# Rotary Encoder config
+sensor:
+  - platform: max17043
+    id: max17043_id
+    i2c_id: bus_a
+    address: 0x36
+    battery_voltage:
+      name: "Battery Voltage"
+    battery_level:
+      name: "Battery"
+      id: battery_level_sensor  
+  - platform: rotary_encoder
+    name: "Spinny Knob Position"
+    id: spinny_knob
+    pin_a:
+      number: A4
+      mode:
+        input: true
+        pullup: true
+    pin_b:
+      number: A5
+      mode:
+        input: true
+        pullup: true
+    resolution: 2
+    on_clockwise:
+      - logger.log: "Encoder turned clockwise"
+      - lambda: |-
+          id(key_rotary_click_state).publish_state(true);
+      - script.execute:
+          id: show_media_status
+          message: "Clockwise"
+      - homeassistant.event:
+          event: esphome.encoder_turned
+          data:
+            direction: clockwise
+      - delay: 300ms
+      - lambda: |-
+          id(key_rotary_click_state).publish_state(false);
+
+    on_anticlockwise:
+      - logger.log: "Encoder turned anticlockwise"
+      - lambda: |-
+          id(key_rotary_click_state).publish_state(true);
+      - script.execute:
+          id: show_media_status
+          message: "Counterclockwise"
+      - homeassistant.event:
+          event: esphome.encoder_turned
+          data:
+            direction: counterclockwise
+      - delay: 300ms
+      - lambda: |-
+          id(key_rotary_click_state).publish_state(false);
+
+
+binary_sensor:
+  - platform: status
+    name: "API Connected"
+    id: api_connected
+  
+  - platform: template
+    id: wifi_connected
+    name: "WiFi Connected"
+    lambda: |-
+      return id(wifi_ssid_sensor).state != "";
+
+  - platform: template
+    name: "Rotary Click"
+    id: key_rotary_click_state
+  
+  - platform: status
+    name: "${friendly_name} Status"
+    entity_category: diagnostic
+    
+  - platform: template
+    name: "Keypad A Held"
+    id: key_a_held_state
+  - platform: template
+    name: "Keypad A Double Click"
+    id: key_a_double_click_state
+  - platform: template
+    name: "Keypad A Click"
+    id: key_a_click_state
+
+  - platform: template
+    name: "Keypad B Held"
+    id: key_b_held_state
+  - platform: template
+    name: "Keypad B Double Click"
+    id: key_b_double_click_state
+  - platform: template
+    name: "Keypad B Click"
+    id: key_b_click_state
+    
+  - platform: template
+    name: "Keypad C Held"
+    id: key_c_held_state
+  - platform: template
+    name: "Keypad C Double Click"
+    id: key_c_double_click_state
+  - platform: template
+    name: "Keypad C Click"
+    id: key_c_click_state
+    
+  - platform: template
+    name: "Keypad D Held"
+    id: key_d_held_state
+  - platform: template
+    name: "Keypad D Double Click"
+    id: key_d_double_click_state
+  - platform: template
+    name: "Keypad D Click"
+    id: key_d_click_state
+    
+  - platform: template
+    name: "Keypad E Held"
+    id: key_e_held_state
+  - platform: template
+    name: "Keypad E Double Click"
+    id: key_e_double_click_state
+  - platform: template
+    name: "Keypad E Click"
+    id: key_e_click_state
+    
+  - platform: template
+    name: "Keypad F Held"
+    id: key_f_held_state
+  - platform: template
+    name: "Keypad F Double Click"
+    id: key_f_double_click_state
+  - platform: template
+    name: "Keypad F Click"
+    id: key_f_click_state
+    
+  - platform: template
+    name: "Keypad G Held"
+    id: key_g_held_state
+  - platform: template
+    name: "Keypad G Double Click"
+    id: key_g_double_click_state
+  - platform: template
+    name: "Keypad G Click"
+    id: key_g_click_state
+    
+  - platform: template
+    name: "Keypad H Held"
+    id: key_h_held_state
+  - platform: template
+    name: "Keypad H Double Click"
+    id: key_h_double_click_state
+  - platform: template
+    name: "Keypad H Click"
+    id: key_h_click_state
+    
+  - platform: template
+    name: "Keypad I Held"
+    id: key_i_held_state
+  - platform: template
+    name: "Keypad I Double Click"
+    id: key_i_double_click_state
+  - platform: template
+    name: "Keypad I Click"
+    id: key_i_click_state
+
+  - platform: template
+    name: "Keypad J Held"
+    id: key_j_held_state
+  - platform: template
+    name: "Keypad J Double Click"
+    id: key_j_double_click_state
+  - platform: template
+    name: "Keypad J Click"
+    id: key_j_click_state
+
+  - platform: template
+    name: "Keypad K Held"
+    id: key_k_held_state
+  - platform: template
+    name: "Keypad K Double Click"
+    id: key_k_double_click_state
+  - platform: template
+    name: "Keypad K Click"
+    id: key_k_click_state    
+
+  - platform: template
+    name: "Keypad L Held"
+    id: key_l_held_state
+  - platform: template
+    name: "Keypad L Double Click"
+    id: key_l_double_click_state
+  - platform: template
+    name: "Keypad L Click"
+    id: key_l_click_state
+
+  - platform: template
+    name: "Keypad M Held"
+    id: key_m_held_state
+  - platform: template
+    name: "Keypad M Double Click"
+    id: key_m_double_click_state
+  - platform: template
+    name: "Keypad M Click"
+    id: key_m_click_state  
+
+  - platform: template
+    name: "Keypad N Held"
+    id: key_n_held_state
+  - platform: template
+    name: "Keypad N Double Click"
+    id: key_n_double_click_state
+  - platform: template
+    name: "Keypad N Click"
+    id: key_n_click_state
+
+  - platform: template
+    name: "Keypad O Held"
+    id: key_o_held_state
+  - platform: template
+    name: "Keypad O Double Click"
+    id: key_o_double_click_state
+  - platform: template
+    name: "Keypad O Click"
+    id: key_o_click_state
+
+  - platform: template
+    name: "Keypad P Held"
+    id: key_p_held_state
+  - platform: template
+    name: "Keypad P Double Click"
+    id: key_p_double_click_state
+  - platform: template
+    name: "Keypad P Click"
+    id: key_p_click_state
+
+  - platform: template
+    name: "Keypad Q Held"
+    id: key_q_held_state
+  - platform: template
+    name: "Keypad Q Double Click"
+    id: key_q_double_click_state
+  - platform: template
+    name: "Keypad Q Click"
+    id: key_q_click_state
+
+  - platform: template
+    name: "Keypad R Held"
+    id: key_r_held_state
+  - platform: template
+    name: "Keypad R Double Click"
+    id: key_r_double_click_state
+  - platform: template
+    name: "Keypad R Click"
+    id: key_r_click_state
+
+  - platform: template
+    name: "Keypad S Held"
+    id: key_s_held_state
+  - platform: template
+    name: "Keypad S Double Click"
+    id: key_s_double_click_state
+  - platform: template
+    name: "Keypad S Click"
+    id: key_s_click_state
+
+  - platform: template
+    name: "Keypad T Held"
+    id: key_t_held_state
+  - platform: template
+    name: "Keypad T Double Click"
+    id: key_t_double_click_state
+  - platform: template
+    name: "Keypad T Click"
+    id: key_t_click_state
+
+  - platform: template
+    name: "Keypad U Held"
+    id: key_u_held_state
+  - platform: template
+    name: "Keypad U Double Click"
+    id: key_u_double_click_state
+  - platform: template
+    name: "Keypad U Click"
+    id: key_u_click_state  
+
+  - platform: template
+    name: "Keypad V Held"
+    id: key_v_held_state
+  - platform: template
+    name: "Keypad V Double Click"
+    id: key_v_double_click_state
+  - platform: template
+    name: "Keypad V Click"
+    id: key_v_click_state
+
+  - platform: template
+    name: "Keypad W Held"
+    id: key_w_held_state
+  - platform: template
+    name: "Keypad W Double Click"
+    id: key_w_double_click_state
+  - platform: template
+    name: "Keypad W Click"
+    id: key_w_click_state
+
+  - platform: template
+    name: "Keypad X Held"
+    id: key_x_held_state
+  - platform: template
+    name: "Keypad X Double Click"
+    id: key_x_double_click_state
+  - platform: template
+    name: "Keypad X Click"
+    id: key_x_click_state
+
+  - platform: template
+    name: "Keypad Y Held"
+    id: key_y_held_state
+  - platform: template
+    name: "Keypad Y Double Click"
+    id: key_y_double_click_state
+  - platform: template
+    name: "Keypad Y Click"
+    id: key_y_click_state
+
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyA
+    key: A
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+             if (id(current_mode) == 0) {
+                // Dice Calculator Mode: Clear the dice expression
+                id(dice_expression).clear();
+              }
+              // Always publish key A click for Home Assistant too (for music/lighting)
+              id(key_a_click_state).publish_state(true);     
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_a_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key A MultiHeld"
+          - lambda: !lambda |-
+              id(key_a_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyA Held"    
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_a_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key A Double Click"
+        - lambda: !lambda |-
+              id(key_a_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyA 2x"      
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_a_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyB
+    key: B
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator Mode: Backspace (remove last character)
+                if (!id(dice_expression).empty()) {
+                  id(dice_expression).pop_back();
+                }
+              }
+              // Always publish key B click for Home Assistant too
+              id(key_b_click_state).publish_state(true);    
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_b_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key B MultiHeld"
+          - lambda: !lambda |-
+              id(key_b_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyB Held"         
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_b_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key B Double Click"
+        - lambda: !lambda |-
+              id(key_b_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyB 2x"            
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_b_double_click_state).publish_state(false);      
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyC
+    key: C
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_c_click_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyC"    
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_c_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key C MultiHeld"
+          - lambda: !lambda |-
+              id(key_c_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyC Held"    
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_c_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key c Double Click"
+        - lambda: !lambda |-
+              id(key_c_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyC 2x"      
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_c_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyD
+    key: D
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - script.execute:
+              id: switch_mode
+              new_mode: 0
+          - script.execute:
+              id: show_media_status
+              message: "Dice Mode"    
+          - lambda: !lambda |-
+              id(key_d_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_d_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key D MultiHeld"
+          - lambda: !lambda |-
+              id(key_d_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyD Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_d_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key D Double Click"
+        - lambda: !lambda |-
+              id(key_d_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyD 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_d_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyE
+    key: E
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_e_click_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "Shuffle"    
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_e_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key E MultiHeld"
+          - lambda: !lambda |-
+              id(key_e_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyE Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_e_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key E Double Click"
+        - lambda: !lambda |-
+              id(key_e_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyE 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_e_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyF
+    key: F
+    on_multi_click:
+      - timing:
+        - ON for at most 960ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_f_click_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "Previous Track"    
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_f_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key F MultiHeld"
+          - lambda: !lambda |-
+              id(key_f_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyF Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_f_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key F Double Click"
+        - lambda: !lambda |-
+              id(key_f_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyF 2x"      
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_f_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyG
+    key: G
+    on_multi_click:
+      - timing:
+        - ON for at most 970ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_g_click_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "Next"    
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_g_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key G MultiHeld"
+          - lambda: !lambda |-
+              id(key_g_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyG Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_g_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key G Double Click"
+        - lambda: !lambda |-
+              id(key_g_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyG 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_g_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyH
+    key: H
+    on_multi_click:
+      - timing:
+        - ON for at most 980ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_h_click_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "Play/Pause"    
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_h_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key H MultiHeld"
+          - lambda: !lambda |-
+              id(key_h_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyH Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_h_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key H Double Click"
+        - lambda: !lambda |-
+              id(key_h_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyH 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_h_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyI
+    key: I
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - script.execute:
+              id: switch_mode
+              new_mode: 1
+          - script.execute:
+              id: show_media_status
+              message: "Music Mode"    
+          - lambda: |-
+              id(key_i_click_state).publish_state(true);    
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_i_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key I MultiHeld"
+          - lambda: !lambda |-
+              id(key_i_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyI Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_i_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key I Double Click"
+        - lambda: !lambda |-
+              id(key_i_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyI 2x"      
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_i_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyJ
+    key: J
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - act as number 7
+                id(dice_expression) += "7";
+              } else if (id(current_mode) == 1 || id(current_mode) == 2) {
+                // Music or Lighting mode - report key press to HA
+                id(key_j_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: |-
+              id(key_j_click_state).publish_state(false);     
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key J MultiHeld"
+          - lambda: !lambda |-
+              id(key_j_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyJ Held"    
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_j_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key J Double Click"
+        - lambda: !lambda |-
+              id(key_j_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyJ 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_j_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyK
+    key: K
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 8
+                id(dice_expression) += "8";
+                id(key_k_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 8
+                id(key_k_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 8
+                id(key_k_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_k_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key K MultiHeld"
+          - lambda: !lambda |-
+              id(key_k_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyK Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_k_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key K Double Click"
+        - lambda: !lambda |-
+              id(key_k_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyK 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_k_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyL
+    key: L
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 9
+                id(dice_expression) += "9";
+                id(key_l_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 9
+                id(key_l_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 9
+                id(key_l_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_l_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key L MultiHeld"
+          - lambda: !lambda |-
+              id(key_l_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyL Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_l_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key L Double Click"
+        - lambda: !lambda |-
+              id(key_l_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyL 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_l_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyM
+    key: M
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_m_click_state).publish_state(true);
+          - script.execute:
+              id: switch_mode
+              new_mode: 2
+          - script.execute:
+              id: show_media_status
+              message: "Lighting Mode"
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_m_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key M MultiHeld"
+          - lambda: !lambda |-
+              id(key_m_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyM Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_m_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key M Double Click"
+        - lambda: !lambda |-
+              id(key_m_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyM 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_m_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyN
+    key: N
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 4
+                id(dice_expression) += "4";
+                id(key_n_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 4
+                id(key_n_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 4
+                id(key_n_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_n_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key N MultiHeld"
+          - lambda: !lambda |-
+              id(key_n_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyN Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_n_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key N Double Click"
+        - lambda: !lambda |-
+              id(key_n_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyN 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_n_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyO
+    key: O
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 5
+                id(dice_expression) += "5";
+                id(key_o_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 5
+                id(key_o_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 5
+                id(key_o_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_o_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key O MultiHeld"
+          - lambda: !lambda |-
+              id(key_o_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyO Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_o_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key O Double Click"
+        - lambda: !lambda |-
+              id(key_o_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyO 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_o_double_click_state).publish_state(false);   
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyP
+    key: P
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 6
+                id(dice_expression) += "6";
+                id(key_p_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 6
+                id(key_p_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 6
+                id(key_p_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_p_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key P MultiHeld"
+          - lambda: !lambda |-
+              id(key_p_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyP Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_p_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key P Double Click"
+        - lambda: !lambda |-
+              id(key_p_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyP 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_p_double_click_state).publish_state(false);        
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyQ
+    key: Q
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              id(key_q_click_state).publish_state(true);
+              // Always roll a d20, regardless of mode
+              int roll = 1 + rand() % 20;
+              id(d20_roll_1) = roll;
+              id(d20_roll_2) = 0;
+              ESP_LOGI("d20", "Quick Roll 1d20: %d", roll);
+          - script.execute: show_d20_result
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_q_click_state).publish_state(false);    
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key Q MultiHeld"
+          - lambda: !lambda |-
+              id(key_q_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyQ Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_q_held_state).publish_state(false);
+    on_double_click:
+      - min_length: 25ms
+        max_length: 350ms
+        then:
+        - lambda: |-
+            int roll1 = 1 + rand() % 20;
+            int roll2 = 1 + rand() % 20;
+            id(d20_roll_1) = roll1;
+            id(d20_roll_2) = roll2;
+            ESP_LOGI("d20", "Rolled 2d20: %d, %d", roll1, roll2);
+        - script.execute: show_d20_result    
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyR
+    key: R
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(current_mode) = 4;
+          - script.execute:
+              id: show_media_status
+              message: "Exploration Mode (future)"
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyS
+    key: S
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 1
+                id(dice_expression) += "1";
+                id(key_s_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 1
+                id(key_s_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 1
+                id(key_s_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_s_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key S MultiHeld"
+          - lambda: !lambda |-
+              id(key_s_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyS Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_s_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key S Double Click"
+        - lambda: !lambda |-
+              id(key_s_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "Combat (plex)"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_s_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyT
+    key: T
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 2
+                id(dice_expression) += "2";
+                id(key_t_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 2
+                id(key_t_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 2
+                id(key_t_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_t_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key T MultiHeld"
+          - lambda: !lambda |-
+              id(key_t_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyT Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_t_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key T Double Click"
+        - lambda: !lambda |-
+              id(key_t_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyT 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_t_double_click_state).publish_state(false); 
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyU
+    key: U
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 3
+                id(dice_expression) += "3";
+                id(key_u_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 3
+                id(key_u_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 3
+                id(key_u_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_u_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key U MultiHeld"
+          - lambda: !lambda |-
+              id(key_u_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyU Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_u_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key U Double Click"
+        - lambda: !lambda |-
+              id(key_u_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyU 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_u_double_click_state).publish_state(false);
+
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyV
+    key: V
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              id(current_mode) = 3;
+              id(ui_mode) = 3;
+              id(diagnostics_screen) = (id(diagnostics_screen) + 1) % 3;
+          - script.execute: show_diagnostics_screen
+  
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyW
+    key: W
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode - add number 0
+                id(dice_expression) += "0";
+                id(key_w_click_state).publish_state(true);
+              } else if (id(current_mode) == 1) {
+                // Music mode - playlist 0
+                id(key_w_click_state).publish_state(true);
+              } else if (id(current_mode) == 2) {
+                // Lighting mode - scene 0
+                id(key_w_click_state).publish_state(true);
+              }
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_w_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key W MultiHeld"
+          - lambda: !lambda |-
+              id(key_w_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyW Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_w_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key W Double Click"
+        - lambda: !lambda |-
+              id(key_w_double_click_state).publish_state(true);
+        - script.execute:
+              id: show_media_status
+              message: "KeyW 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_w_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyX
+    key: X
+    on_multi_click:
+      - timing:
+          - ON for at least 4s
+        then:
+          - logger.log: "Entering sleep mode"
+          - script.execute: simulate_display_fade
+
+      - timing:
+          - ON for at most 990ms
+          - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(sleeping_mode)) {
+                id(sleeping_mode) = false;
+                id(oled_display).set_update_interval(500);
+                id(wake_animation_frame) = 0;
+                id(ui_mode) = 0;
+              } else if (id(current_mode) == 0) {              
+                id(dice_expression) += "d";
+                id(last_key_pressed) = "d";
+              }
+              id(key_x_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_x_click_state).publish_state(false);
+
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: keyY
+    key: Y
+    on_multi_click:
+      - timing:
+          - ON for at most 990ms
+          - OFF for at least 500ms
+        then:
+          - lambda: |-
+              if (id(current_mode) == 0) {
+                // Dice Calculator mode
+                if (!id(dice_expression).empty()) {
+                  int d_pos = id(dice_expression).find('d');
+                  if (d_pos != std::string::npos) {
+                    int num_dice = atoi(id(dice_expression).substr(0, d_pos).c_str());
+                    int num_sides = atoi(id(dice_expression).substr(d_pos + 1).c_str());
+                    if (num_dice > 0 && num_sides > 0) {
+                      int total = 0;
+                      for (int i = 0; i < num_dice; i++) {
+                        total += (rand() % num_sides) + 1;
+                      }
+                      id(d20_roll_1) = total;
+                      id(d20_roll_2) = 0;
+                      id(dice_expression).clear();  // clear after rolling
+                    }
+                  }
+                }
+              }
+              id(key_y_click_state).publish_state(true);
+          - script.execute: show_d20_result  # <-- THIS is what was missing!
+          - delay: 500ms
+          - lambda: |-
+              id(key_y_click_state).publish_state(false);
+      - timing:
+          - ON for at least 1s
+        then:
+          - logger.log: "Key Y MultiHeld"
+          - lambda: !lambda |-
+              id(key_y_held_state).publish_state(true);
+          - script.execute:
+              id: show_media_status
+              message: "KeyY Held"
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_y_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key Y Double Click"
+        - lambda: !lambda |-
+            id(key_y_double_click_state).publish_state(true);
+        - script.execute:
+            id: show_media_status
+            message: "KeyY 2x"
+        - delay: 1s
+        - lambda: !lambda |-
+            id(key_y_double_click_state).publish_state(false);
