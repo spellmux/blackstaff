@@ -23,10 +23,11 @@ Under the following terms:
 ### Based on:
 
 - [Bignum Hot-Swappable and Hand-Wired Numpad Macropad](https://makerworld.com/en/models/610097-bignum-hot-swappable-and-hand-wired-numpad-macropa)  
-  by [pokzy](https://makerworld.com/en/@Pokzy)
+  by [pokzy](https://makerworld.com/en/u/pokzy)
 
 Modifications were made to support:
 - OLED display
+- Rotary encoders
 - ESP32 Feather
 - Battery housing and internal wiring
 
@@ -58,19 +59,22 @@ Licensed under the **MIT License**:
 
 ---
 
-## 🛠 3. Original Work
+## ✍️ 3. Original Work (Blackstaff Additions)
 
-All other content in this repository not otherwise attributed is © [Your Name or GitHub Username], 2025.  
-You may choose to license your original contributions under:
+All other content created specifically for the **Blackstaff Macropad** project is licensed under:
 
-- 🟢 [MIT License](https://opensource.org/licenses/MIT) (recommended for software/code)
-- OR
-- 🟢 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) (to match hardware)
+**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**  
+https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-Please update this file if you choose a specific license for your original material.
+This includes:
+- Original ESPHome YAML configuration and logic
+- Custom icons, graphics, and animations
+- Display scripting and UI interactions
+- Idle/sleep/wake behavior
+- New physical layout modifications
 
 ---
 
-## 📬 Questions?
+## 📬 Contact
 
-If you're unsure about reusing parts of this project, please reach out via GitHub Issues for clarification.
+If you have questions about attribution, reuse, or want to license this project for commercial use, please open a GitHub Issue or contact the project maintainer directly.
