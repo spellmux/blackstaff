@@ -27,7 +27,6 @@ Under the following terms:
 
 Modifications were made to support:
 - OLED display
-- Rotary encoders
 - ESP32 Feather
 - Battery housing and internal wiring
 
