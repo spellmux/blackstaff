@@ -23,7 +23,7 @@ Under the following terms:
 ### Based on:
 
 - [Bignum Hot-Swappable and Hand-Wired Numpad Macropad](https://makerworld.com/en/models/610097-bignum-hot-swappable-and-hand-wired-numpad-macropa)  
-  by [peej](https://makerworld.com/en/u/peej)
+  by [pokzy](https://makerworld.com/en/@Pokzy)
 
 Modifications were made to support:
 - OLED display
