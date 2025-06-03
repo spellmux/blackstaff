@@ -50,7 +50,7 @@ This project builds on the excellent work of others and is licensed to respect t
 
 ### Enclosure Design
 - Based on the [Bignum Hot-Swappable and Hand-Wired Numpad Macropad](https://makerworld.com/en/models/610097-bignum-hot-swappable-and-hand-wired-numpad-macropa)  
-  by [pokzy](https://makerworld.com/en/u/pokzy), licensed under  
+  by [pokzy](https://makerworld.com/en/u/pokzy](https://makerworld.com/en/@Pokzy), licensed under  
   [Creative Commons Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
   Modifications include support for:
