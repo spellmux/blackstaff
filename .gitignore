@@ -1,0 +1,14 @@
+# ESPHome build and temp files
+.pioenvs/
+.build/
+*.pyc
+*.log
+
+# Secrets
+esphome/secrets.yaml
+
+# OS clutter
+.DS_Store
+Thumbs.db
+
+
